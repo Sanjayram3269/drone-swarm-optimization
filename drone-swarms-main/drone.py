@@ -1,15 +1,20 @@
 import numpy as np
 from pso_optimizer import PSOOptimizer
 
+# -------------------------------
+# GLOBAL SETTINGS (FOR EXPERIMENTS)
+# -------------------------------
+WEATHER_MODE = "strong"   # options: "none", "medium", "strong"
+USE_PSO = True        # True = PSO ON, False = PSO OFF
+
+
 class Drone:
     """
-    Represents a single drone in the swarm with basic movement and communication capabilities.
+    Represents a single drone in the swarm with movement,
+    disturbance handling, and optional PSO-based optimization.
     """
 
     def __init__(self, position, index):
-        """
-        Initializes a drone with a given position and index.
-        """
         self.position = np.array(position, dtype=float)
         self.index = index
         self.target_position = np.array(position, dtype=float)
@@ -23,12 +28,29 @@ class Drone:
         """
         return np.linalg.norm(self.position - desired_position)
 
+    def get_wind(self):
+        """
+        Returns wind vector based on selected weather mode.
+        """
+
+        if WEATHER_MODE == "none":
+            return np.zeros(3)
+
+        elif WEATHER_MODE == "medium":
+            return np.random.uniform(-0.3, 0.3, size=3)
+
+        elif WEATHER_MODE == "strong":
+            return np.random.uniform(-1.0, 1.0, size=3)
+
+        else:
+            return np.zeros(3)
+
     def update_position(self, neighbor_positions, behavior_algorithms):
         """
         Updates the drone's position using:
         - Behavior algorithms
-        - Wind disturbance
-        - PSO optimization
+        - Weather disturbance
+        - Optional PSO optimization
         """
 
         # Step 1: Apply behavior algorithms
@@ -43,11 +65,11 @@ class Drone:
         else:
             new_position = self.position.copy()
 
-        # Step 3: Add dynamic wind disturbance
-        wind = np.random.uniform(-0.3, 0.3, size=3)
+        # Step 3: Apply wind disturbance
+        wind = self.get_wind()
         new_position = new_position + wind
 
-        # Step 4: Temporary update (before optimization)
+        # Step 4: Update position (before optimization)
         self.position = new_position
 
         # Step 5: Update target position
@@ -56,18 +78,13 @@ class Drone:
                 self, neighbor_positions, self.position.copy()
             )
 
-        # Step 6: PSO Optimization (MAIN INTELLIGENCE)
-        optimized_position = self.pso.optimize(self, self.target_position)
-        self.position = optimized_position
+        # Step 6: PSO Optimization (OPTIONAL)
+        if USE_PSO:
+            optimized_position = self.pso.optimize(self, self.target_position)
+            self.position = optimized_position
 
     def communicate(self):
-        """
-        Returns the position information that the drone shares with others.
-        """
         return self.position
 
     def get_position(self):
-        """
-        Retrieves the current position of the drone.
-        """
         return self.position
