@@ -1,129 +1,151 @@
-# Drone Swarm Simulation
+# 🚁 Drone Swarm Optimization under Inclement Weather using PSO
 
-A Python-based **drone swarm simulator** that models the behavior of multiple autonomous drones using different algorithms for **consensus**, **collision avoidance**, and **formation control**. The simulation is visualized in **3D** using Matplotlib and controlled through a Tkinter-based GUI.
+> A research-driven simulation of drone swarm coordination under dynamic environmental disturbances using Particle Swarm Optimization (PSO).
 
-[![Watch the Drone Swarm Simulation](drone-swarms.png)](https://www.youtube.com/watch?v=5PN6R7qeXt8)
+---
 
-## 🚀 Features
+## 📌 Overview
 
-- **Swarm Behavior Algorithms:**
-  - **Consensus Algorithm:** Ensures cohesion by moving drones toward the average position of their neighbors.
-  - **Collision Avoidance Algorithm:** Prevents drones from colliding by adjusting their trajectories dynamically.
-  - **Formation Control Algorithm:** Organizes drones into structured formations (line, circle, square or random).
-- **Interactive Visualization:**
-  - Real-time 3D visualization of drone movements using **Matplotlib**.
-  - Adjustable **zoom level** for better observation.
-  - Supports **different formations** dynamically via the GUI.
-- **Multi-threaded Simulation:** The swarm behavior runs in a separate thread to keep the UI responsive.
+This project models a multi-drone swarm system operating in a 3D environment under **inclement weather conditions** such as wind disturbances.  
 
-## 🛠️ Installation
+Traditional swarm systems fail under such conditions — this project introduces:
 
-### Prerequisites
+👉 **Weather-aware optimization using PSO**  
+👉 **Dynamic disturbance modeling**  
+👉 **Performance evaluation through error metrics**
 
-- **Python 3.12+** is required (and should include Tkinter).
-- **Poetry** for dependency management.
-- **Conda** for managing virtual environments (or **other** tools).
+---
 
-### Create and Activate your Virtual Environment
+## 🧠 Key Contributions
 
-If you use Conda like I do:
+- 🌪️ Dynamic **wind disturbance modeling**
+- 🤖 **PSO-based optimization** for swarm stabilization
+- ⚙️ **Toggle system (PSO ON/OFF)** for comparison
+- 📊 Real-time **formation error tracking**
+- 🧪 Multi-scenario experimentation:
+  - No wind
+  - Medium wind
+  - Strong wind
 
-#### Create a Conda environment with Python 3.12:
+---
 
-```bash
-conda create -n drone-swarms python=3.12 -y
-conda activate drone-swarms
-```
+## ⚙️ System Architecture
 
-### Install Poetry (if not installed)
 
-```bash
-pip install poetry
-```
+Drone Swarm → Formation Control → Weather Disturbance → PSO Optimization → Stable Formation
 
-### Install Dependencies
 
-Clone the repository and install dependencies using **Poetry**:
+---
 
-```bash
-git clone https://github.com/jeanjerome/drone-swarms.git
-cd drone-swarms
-poetry install
-```
+## 🔬 Methodology
 
-## ▶️ Usage
+1. Initialize drones in 3D space  
+2. Apply formation control (line, circle, etc.)  
+3. Introduce wind disturbance  
+4. Apply PSO to minimize formation error  
+5. Track convergence using error metrics  
 
-Run the main script using Poetry:
+---
 
-```bash
-poetry run python main.py
-```
+## 📉 Experimental Results
 
-### UI Controls
-- **Formation Selection:** Choose between line, circle, square and random formations.
-- **Zoom Level:** Adjust zoom for better visualization (but no longer needed due to automatic zooming).
-- **Start/Stop Simulation:** Toggle the simulation on and off.
-- **Color Mode:** Choose drones color based on their index or distance to target.
+### 🔹 Observations
+
+| Scenario | Result |
+|--------|-------|
+| No Wind | Stable formation |
+| Medium Wind | Slight disturbance |
+| Strong Wind (No PSO) | ❌ Unstable (High error ~50) |
+| Strong Wind (With PSO) | ✅ Stable (Low error ~4) |
+
+---
+
+## 📊 Performance Comparison
+
+| Metric | Without PSO | With PSO |
+|------|------------|----------|
+| Error Magnitude | Very High | Low |
+| Stability | Poor | High |
+| Convergence | Slow | Fast |
+
+---
+
+## 📸 Output Visualizations
+
+### 🌤️ No Wind
+![No Wind](outputs/no_wind.png)
+
+### 🌧️ Medium Wind
+![Medium Wind](outputs/medium_wind.png)
+
+### ⛈️ Strong Wind (No PSO)
+![No PSO](outputs/strong_no_pso.png)
+
+### 🤖 Strong Wind (With PSO)
+![With PSO](outputs/strong_with_pso.png)
+
+---
+
+## 🛠️ Tech Stack
+
+- Python  
+- NumPy  
+- Matplotlib  
+- Tkinter  
+
+---
 
 ## 📂 Project Structure
 
-```
-📦 drone-swarms
-│── 📜 main.py                  # Entry point for the simulation (Tkinter-based UI)
-│── 📜 drone.py                 # Drone class defining behavior and communication
-│── 📜 visualizer.py            # Matplotlib-based 3D visualization
-│── 📂 behaviors                # Folder containing behavior algorithms
-│   │── 📜 consensus_algorithm.py       # Consensus-based movement logic
-│   │── 📜 collision_avoidance_algorithm.py  # Avoidance of drone collisions
-│   │── 📜 formation_control_algorithm.py   # Formation control logic
-│── 📜 README.md                # Project documentation
-│── 📜 pyproject.toml           # Poetry configuration file
-│── 📜 poetry.lock              # Poetry lockfile
-```
 
-## 🛠️ Customization
+├── main.py
+├── drone.py
+├── pso_optimizer.py
+├── metrics.py
+├── behaviors/
+├── visualizer.py
+├── outputs/
+├── README.md
 
-- **Change Number of Drones:** Modify `self.num_drones` in `main.py`.
-- **Adjust Algorithm Parameters:** Modify `epsilon`, `collision_threshold`, or `formation_type` in `main.py`.
 
-## 📖 Future Improvements
+---
 
-- 🔄 Add more **swarm behavior algorithms**:
-  - [ ] **Obstacle Avoidance (Évitement d'Obstacles)**
-   - **Description** : The drones detect and avoid static or dynamic obstacles in the environment.
-   - **Implementation** : Introduce obstacles in the 3D space and apply a similar logic to collision avoidance to navigate around them.
+## ▶️ How to Run
 
-  - [ ] **Path Planning (Planification de Trajectoire)**
-     - **Description** : The drones plan and follow an optimal trajectory to reach a destination while avoiding obstacles.
-     - **Implementation** : Use pathfinding algorithms like **A*** or **Dijkstra** to compute efficient routes in an environment with obstacles.
+```bash
+git clone https://github.com/Sanjayram3269/drone-swarm-optimization.git
+cd drone-swarm-optimization
+pip install numpy matplotlib
+python main.py
+🧪 Experiments
 
-  - [ ] **Search and Rescue (Recherche et Sauvetage)**
-     - **Description** : The drones explore an area to locate targets (e.g., distressed people) and coordinate their movements for efficient coverage.
-     - **Implementation** : Implement **area coverage algorithms** and **collaborative search strategies**.
+Modify in drone.py:
 
-  - [ ] **Energy Management (Gestion de l'Énergie)**
-     - **Description** : The drones manage their energy consumption to maximize flight time and prevent failures.
-     - **Implementation** : Model energy consumption and adjust behaviors to save power (e.g., reducing speed or minimizing unnecessary movements).
+WEATHER_MODE = "none" / "medium" / "strong"
+USE_PSO = True / False
+🚀 Applications
+Autonomous drone delivery
+Military swarm coordination
+Disaster response
+Multi-agent robotic systems
+🔮 Future Scope
+Reinforcement Learning integration
+Real-time sensor-based control
+Obstacle avoidance
+Real drone deployment
+👨‍💻 Authors
+Sanjayram P
+Arindam Sushil Katoch
+⭐ Project Highlights
 
-  - [ ] **Communication Relay (Relais de Communication)**
-     - **Description** : The drones act as relays to maintain communication between each other or with a base station, especially in environments where direct communication is limited.
-     - **Implementation** : Model communication range and adjust drone positions dynamically to ensure network connectivity.
+✔ Real-world disturbance modeling
+✔ Optimization + simulation + analysis
+✔ Comparative study (with vs without PSO)
 
-  - [ ] **Dynamic Task Allocation (Allocation Dynamique des Tâches)**
-     - **Description** : The drones dynamically distribute tasks (e.g., surveillance, delivery) based on their capabilities and mission requirements.
-     - **Implementation** : Use **optimization algorithms** for efficient task allocation in real-time scenarios.
+📜 License
 
-  - [ ] **Flocking Behavior (Comportement de Vol en Essaim)**
-     - **Description** : The drones follow swarm-inspired flight behaviors similar to birds or fish, incorporating alignment, cohesion, and separation.
-     - **Implementation** : Implement **Reynolds' flocking rules** for realistic swarm movement.
+This project extends an open-source drone swarm simulation with additional optimization and environmental modeling.
 
-- [ ] 🎮 Improve user interactivity in the **Tkinter GUI**.
-- [ ]  📡 Introduce **real-world drone communication models**.
+💥 Final Note
 
-## 🤝 Contributing
-
-Feel free to **fork**, **modify**, and **submit a pull request**! Suggestions and improvements are always welcome.  
-
-## 📜 License
-
-This project is licensed under the **MIT License**. See [LICENSE](LICENSE) for details.
+This project demonstrates how intelligent optimization techniques like PSO can maintain stability in complex, uncertain environments — bridging the gap between simulation and real-world swarm robotics.
